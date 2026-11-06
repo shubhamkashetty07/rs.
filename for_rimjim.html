@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17142b">
+<title>A little universe for Rimjim ✨</title>
+<style>
+:root{
+  --night:#17142b; --plum:#302044; --rose:#f5b8cb; --cream:#fff2e9;
+  --muted:#e6cbd9; --glass:rgba(255,255,255,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; min-height:100vh; color:var(--cream);
+  font-family:Georgia,"Times New Roman",serif;
+  background:
+    radial-gradient(ellipse at 18% 15%,rgba(148,106,169,.28),transparent 38%),
+    radial-gradient(ellipse at 85% 35%,rgba(217,133,166,.18),transparent 35%),
+    linear-gradient(155deg,#17142b 0%,#251b38 48%,#3b2542 100%);
+  overflow-x:hidden;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.42;
+  background-image:radial-gradient(1px 1px at 10% 20%,#fff 99%,transparent),
+  radial-gradient(1px 1px at 70% 12%,#fff 99%,transparent),
+  radial-gradient(1.5px 1.5px at 42% 66%,#fff 99%,transparent),
+  radial-gradient(1px 1px at 88% 78%,#fff 99%,transparent),
+  radial-gradient(1px 1px at 24% 87%,#fff 99%,transparent);
+  background-size:230px 190px;
+}
+button{font:inherit;cursor:pointer}
+.wrap{width:min(920px,92vw);margin:auto;position:relative;z-index:1}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;color:#f7dce7}
+.brand{letter-spacing:.12em;font:12px Arial,sans-serif;text-transform:uppercase}
+.music-btn,.pill{
+  border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);
+  color:#fff4f6;border-radius:999px;padding:10px 15px;backdrop-filter:blur(10px)
+}
+.music-btn:hover,.pill:hover{background:rgba(255,255,255,.16)}
+.hero{min-height:75vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:55px 12px 75px}
+.eyebrow{font:11px Arial,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#eab8cb}
+h1{font-size:clamp(44px,9vw,84px);font-weight:normal;line-height:1.02;margin:20px 0 16px}
+h1 span{color:#f4b9ce;font-style:italic}
+.lead{max-width:570px;color:#e9d4df;line-height:1.8;font-size:17px}
+.cta{margin-top:26px;background:linear-gradient(120deg,#f2b8cd,#e7a6c2);color:#342037;border:0;border-radius:999px;padding:14px 24px;box-shadow:0 8px 35px #e7a6c244}
+.cta:hover{transform:translateY(-2px)}
+section{padding:55px 0}
+.section-title{text-align:center;font-size:clamp(29px,5vw,42px);font-weight:normal;margin:0 0 12px}
+.section-sub{text-align:center;color:#d9c1d0;line-height:1.7;margin:0 auto 28px;max-width:560px}
+.card{
+  background:var(--glass);border:1px solid rgba(255,255,255,.16);border-radius:24px;
+  padding:clamp(22px,5vw,42px);backdrop-filter:blur(14px);
+  box-shadow:0 20px 70px rgba(0,0,0,.16)
+}
+.letter{max-width:720px;margin:auto;font-size:18px;line-height:1.9;color:#f7e8ee}
+.letter p{margin:0 0 17px}
+.signature{font-style:italic;color:#f4b9ce;margin-top:26px}
+.reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.reason{
+  min-height:130px;padding:22px;border-radius:20px;
+  background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.045));
+  border:1px solid rgba(255,255,255,.12);color:#f7e7ed;line-height:1.6
+}
+.reason b{display:block;color:#f4b9ce;font-size:23px;font-weight:normal;margin-bottom:9px}
+.hug-area{text-align:center}
+.hug-orb{
+  width:170px;height:170px;border-radius:50%;margin:22px auto;
+  display:grid;place-items:center;font-size:66px;
+  background:radial-gradient(circle at 35% 28%,#ffe5ed,#e6a6c3 55%,#9e648e);
+  box-shadow:0 0 0 12px rgba(255,255,255,.04),0 0 60px #eaa8c566;
+  transition:transform .3s;
+}
+.hug-orb.squeezed{transform:scale(1.15)}
+.hug-message{min-height:32px;color:#f6c9d8;line-height:1.6}
+.final-card{text-align:center;max-width:700px;margin:auto}
+.final-card p{color:#ead4df;line-height:1.8;font-size:17px}
+footer{text-align:center;padding:45px 0 60px;color:#cbb4c5;font:12px Arial,sans-serif;letter-spacing:.08em}
+.heart{position:fixed;bottom:-40px;z-index:0;pointer-events:none;animation:floatUp linear forwards;opacity:.8}
+@keyframes floatUp{to{transform:translateY(-115vh) translateX(var(--drift)) rotate(35deg);opacity:0}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s,transform .8s}
+.reveal.visible{opacity:1;transform:none}
+@media(max-width:600px){
+ nav{padding:16px 0}.brand{font-size:10px}.music-btn{font-size:12px;padding:9px 12px}
+ .hero{min-height:70vh;padding-top:40px}.lead{font-size:15px}
+ .reasons{grid-template-columns:1fr}.reason{min-height:unset}
+ section{padding:42px 0}.letter{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="brand">A little universe for Rimjim ✦</div>
+    <button class="music-btn" id="musicToggle" aria-pressed="false">♫ Play soft music</button>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">A little something from Shubham</div>
+    <h1>Hey, <span>Rimjim.</span></h1>
+    <p class="lead">I made this little corner of the internet just for you — a small reminder of how special you are to me.</p>
+    <button class="cta" onclick="document.querySelector('#letter').scrollIntoView({behavior:'smooth'})">A little note for you ↓</button>
+  </header>
+
+  <section id="letter" class="reveal">
+    <h2 class="section-title">A little note from my heart</h2>
+    <p class="section-sub">Just something sweet I wanted you to have.</p>
+    <article class="card letter">
+      <p>Hey my favourite person,</p>
+      <p>I just wanted to make something small and special for you, because you deserve reminders of how loved and appreciated you are.</p>
+      <p>You make ordinary moments feel a little brighter. Your smile, your laugh, your silly little ways, and all the tiny things that make you <em>you</em> are precious to me.</p>
+      <p>Even with all the distance between us, you have a special place in my heart. I wish I could be right beside you, give you the biggest hug, and see that beautiful smile in person.</p>
+      <p>This page is just a little pocket of affection made especially for you. I hope it makes you smile today and reminds you that you mean so much to me.</p>
+      <p class="signature">With love,<br>Shubham ♡</p>
+    </article>
+  </section>
+
+  <section class="reveal">
+    <h2 class="section-title">Reasons you're my favourite</h2>
+    <p class="section-sub">A few little things I adore about you.</p>
+    <div class="reasons">
+      <div class="reason"><b>01 · Your presence</b>There is something comforting and wonderful about having you in my life.</div>
+      <div class="reason"><b>02 · Our little moments</b>Even the simplest moments with you become memories I want to keep.</div>
+      <div class="reason"><b>03 · Your uniqueness</b>Your personality, your thoughts, and all your little quirks make you wonderfully you.</div>
+      <div class="reason"><b>04 · The choice to try</b>I admire the way you bring your own sparkle into the world.</div>
+    </div>
+  </section>
+
+  <section class="reveal hug-area">
+    <h2 class="section-title">A warm hug, from far away</h2>
+    <p class="section-sub">Until I can give you a real one, here's a tiny virtual hug.</p>
+    <div class="hug-orb" id="hugOrb" aria-label="A pink heart">🫂</div>
+    <button class="cta" id="hugBtn">Send me a hug</button>
+    <p class="hug-message" id="hugMessage" aria-live="polite">Tap when you want a little warmth ♡</p>
+  </section>
+
+  <section class="reveal">
+    <div class="card final-card">
+      <div class="eyebrow">One last thing</div>
+      <h2 class="section-title" style="margin-top:14px">A little reminder for you</h2>
+      <p>I hope this made you smile, even for a moment. You deserve happiness, gentle days, endless love, and all the beautiful little things life has to offer.</p>
+      <button class="cta" id="surpriseBtn">Open your little surprise ✨</button>
+      <p id="surpriseText" aria-live="polite" hidden>Sending you the biggest long-distance hug, a pocketful of stars, and all my love. 🌙💗</p>
+    </div>
+  </section>
+  <footer>MADE WITH LOVE · JUST FOR RIMJIM ♡</footer>
+</div>
+
+<script>
+// Floating hearts
+const heartSymbols = ["♡","♥","✧","💗"];
+function makeHeart(){
+  const el=document.createElement("span");
+  el.className="heart";
+  el.textContent=heartSymbols[Math.floor(Math.random()*heartSymbols.length)];
+  el.style.left=Math.random()*100+"vw";
+  el.style.fontSize=(13+Math.random()*19)+"px";
+  el.style.color=["#f5b8cb","#f7dce7","#e8c5f0"][Math.floor(Math.random()*3)];
+  el.style.setProperty("--drift",(Math.random()*120-60)+"px");
+  el.style.animationDuration=(8+Math.random()*8)+"s";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),17000);
+}
+let heartTimer=setInterval(makeHeart,850);
+
+// Scroll reveal
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("visible")});
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+// Virtual hug
+const hugBtn=document.getElementById("hugBtn");
+const hugOrb=document.getElementById("hugOrb");
+const hugMessage=document.getElementById("hugMessage");
+hugBtn.addEventListener("click",()=>{
+  hugOrb.classList.add("squeezed");
+  hugMessage.textContent="A big warm hug, sent all the way from me to you. 🫂💗";
+  for(let i=0;i<14;i++)setTimeout(makeHeart,i*90);
+  setTimeout(()=>hugOrb.classList.remove("squeezed"),650);
+});
+
+// Surprise ending
+document.getElementById("surpriseBtn").addEventListener("click",()=>{
+  const message=document.getElementById("surpriseText");
+  message.hidden=false;
+  document.getElementById("surpriseBtn").textContent="Surprise opened ♡";
+  for(let i=0;i<22;i++)setTimeout(makeHeart,i*65);
+});
+
+// Gentle original instrumental made with Web Audio API.
+// It starts only after the visitor taps Play; no audio file or external service needed.
+let audioCtx=null, master=null, musicOn=false, musicTimer=null, noteIndex=0;
+const notes=[261.63,329.63,392.00,329.63,293.66,349.23,440.00,349.23];
+function playNote(freq,when,duration){
+  const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+  const shimmer=audioCtx.createOscillator(), shimmerGain=audioCtx.createGain();
+  osc.type="sine";osc.frequency.setValueAtTime(freq,when);
+  shimmer.type="sine";shimmer.frequency.setValueAtTime(freq*2.002,when);
+  gain.gain.setValueAtTime(0,when);
+  gain.gain.linearRampToValueAtTime(.055,when+.35);
+  gain.gain.exponentialRampToValueAtTime(.001,when+duration);
+  shimmerGain.gain.setValueAtTime(0,when);
+  shimmerGain.gain.linearRampToValueAtTime(.009,when+.5);
+  shimmerGain.gain.exponentialRampToValueAtTime(.001,when+duration);
+  osc.connect(gain);gain.connect(master);
+  shimmer.connect(shimmerGain);shimmerGain.connect(master);
+  osc.start(when);shimmer.start(when);
+  osc.stop(when+duration+.05);shimmer.stop(when+duration+.05);
+}
+function scheduleMusic(){
+  if(!musicOn)return;
+  const now=audioCtx.currentTime;
+  const melody=notes[noteIndex%notes.length];
+  playNote(melody,now,.95);
+  if(noteIndex%4===0)playNote(melody/2,now,1.7);
+  noteIndex++;
+}
+const musicToggle=document.getElementById("musicToggle");
+musicToggle.addEventListener("click",async()=>{
+  if(!audioCtx){
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC){musicToggle.textContent="Music unavailable";return;}
+    audioCtx=new AC();master=audioCtx.createGain();master.gain.value=.7;master.connect(audioCtx.destination);
+  }
+  if(audioCtx.state==="suspended")await audioCtx.resume();
+  musicOn=!musicOn;
+  if(musicOn){
+    scheduleMusic();musicTimer=setInterval(scheduleMusic,1050);
+    musicToggle.textContent="Ⅱ Pause music";musicToggle.setAttribute("aria-pressed","true");
+  }else{
+    clearInterval(musicTimer);musicToggle.textContent="♫ Play soft music";musicToggle.setAttribute("aria-pressed","false");
+  }
+});
+</script>
+</body>
+</html>
